@@ -15,16 +15,20 @@ import shutil
 
 
 #===============================
-API_ID = os.getenv("API_ID")
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN") or os.getenv("BOT_TOKEN")
+API_ID = int(os.environ["API_ID"])
+API_HASH = os.environ["API_HASH"]
+BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 
-if not API_ID or not API_HASH or not BOT_TOKEN:
-    raise RuntimeError(
-        "Missing required environment variables: API_ID, API_HASH, TELEGRAM_BOT_TOKEN (or BOT_TOKEN)"
-    )
+print("Starting Telegram client...", flush=True)
 
-client = TelegramClient('@Mustapha_Bacha35', int(API_ID), API_HASH).start(bot_token=BOT_TOKEN)
+try:
+    client = TelegramClient("railway_bot", API_ID, API_HASH)
+    client.start(bot_token=BOT_TOKEN)
+    print("Telegram client connected successfully.", flush=True)
+except Exception:
+    import traceback
+    traceback.print_exc()
+    raise
 
 # ==========================================
 VLESS_TEMPLATE = (
