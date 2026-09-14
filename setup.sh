@@ -28,4 +28,4 @@ echo -e "${GREEN}✅ اكتمل التثبيت بنجاح! السيرفر جاه
 echo -e "${CYAN}=================================================${NC}"
 
 echo -e "${YELLOW}لتشغيل البوت بالخلفية، استخدم الأمر:${NC}"
-echo -e "${GREEN}xvfb-run -a python3 GCP.py${NC}\n"
+echo -e "${GREEN}xvfb-run -a python3 gcp.py${NC}\n"
