@@ -21,13 +21,13 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
     && rm -f google-chrome-stable_current_amd64.deb \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install the system libraries Playwright/Chromium may need.
 RUN python -m playwright install-deps
 
-COPY GCP.py .
+COPY gcp.py
 
 # The original bot uses headless=False. Xvfb supplies the virtual display on Railway.
-CMD ["xvfb-run", "-a", "--server-args=-screen 0 1920x1080x24", "python", "GCP.py"]
+CMD ["xvfb-run", "-a", "--server-args=-screen 0 1920x1080x24", "python", "gcp.py"]
