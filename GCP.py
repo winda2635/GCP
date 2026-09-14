@@ -19,13 +19,21 @@ API_ID = int(os.environ["API_ID"])
 API_HASH = os.environ["API_HASH"]
 BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 
-print("Starting Telegram client...", flush=True)
+print("STEP 1: Python started", flush=True)
 
 try:
+    print("STEP 2: Creating TelegramClient", flush=True)
+
     client = TelegramClient("railway_bot", API_ID, API_HASH)
+
+    print("STEP 3: Connecting to Telegram", flush=True)
+
     client.start(bot_token=BOT_TOKEN)
-    print("Telegram client connected successfully.", flush=True)
+
+    print("STEP 4: Telegram connected", flush=True)
+
 except Exception:
+    print("!!! TELEGRAM CONNECTION ERROR !!!", flush=True)
     import traceback
     traceback.print_exc()
     raise
