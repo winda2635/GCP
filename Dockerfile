@@ -27,4 +27,4 @@ RUN python -m playwright install-deps
 
 COPY gcp.py .
 
-CMD ["xvfb-run", "-a", "--server-args=-screen 0 1920x1080x24", "python", "gcp.py"]
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x24 -ac & export DISPLAY=:99; exec python gcp.py"]
