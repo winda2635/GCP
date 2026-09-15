@@ -1,5 +1,5 @@
-# استخدم صورة Playwright الرسمية التي تحتوي على Chromium وكل التبعيات
-FROM mcr.microsoft.com/playwright:v1.48.0-noble
+# استخدم صورة Playwright الرسمية (Python) التي تحتوي على Python و Chromium وكل التبعيات
+FROM mcr.microsoft.com/playwright/python:v1.48.0-noble
 
 # تعيين مجلد العمل
 WORKDIR /app
