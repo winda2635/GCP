@@ -503,19 +503,18 @@ async def process_sso_link(chat_id, sso_url):
 
             try:
                 context = await p.chromium.launch_persistent_context(
-                    user_data_dir=BROWSER_PROFILE_DIR,
-                    channel='chrome',
-                    headless=False,
-                    args=[
-                        '--no-sandbox',
-                        '--disable-setuid-sandbox',
-                        '--disable-blink-features=AutomationControlled',
-                        '--disable-infobars',
-                        '--window-size=1920,1080'
-                    ],
-                    viewport={'width': 1920, 'height': 1080},
-                    locale='en-US'
-                )
+    user_data_dir=BROWSER_PROFILE_DIR,
+    headless=False,
+    args=[
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-blink-features=AutomationControlled',
+        '--disable-infobars',
+        '--window-size=1920,1080'
+    ],
+    viewport={'width': 1920, 'height': 1080},
+    locale='en-US'
+)
 
                 page = context.pages[0] if context.pages else await context.new_page()
                 await page.goto(sso_url, wait_until="domcontentloaded", timeout=60000)
