@@ -1,11 +1,14 @@
-FROM python:3.11-slim-bookworm
+FROM ubuntu:24.04
 
-ENV PYTHONUNBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-venv \
     wget \
     ca-certificates \
     gnupg \
@@ -14,16 +17,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt-get update \
-    && apt-get install -y ./google-chrome-stable_current_amd64.deb \
-    && rm -f google-chrome-stable_current_amd64.deb \
-    && rm -rf /var/lib/apt/lists/*
+# إنشاء بيئة Python افتراضية
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# تثبيت متطلبات المتصفح التي يحتاجها Playwright
 RUN python -m playwright install-deps
+
+# تثبيت Chromium الخاص بـ Playwright
+RUN python -m playwright install chromium
 
 COPY gcp.py .
 
